@@ -1,16 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
+
 // import track from '@astock/core-react-analytics';
-// import { withRouter } from 'react-router';
-import { StockNavbarMarketplace } from '../dist/stock.navbar.js';
+import { 
+  useFeatureFlags,
+  isNavbarV2EnabledFF,
+  isNavbarV2WithoutFreePremiumEnabledFF,
+ } from '@astock/react-feature-flags';
+import { StockNavbarFranklinWrapper } from '../stock.navbar.js';
 
 const config = {
     authentication: {
-      imsBaseUrl: 'https://ims-na1-stg1.adobelogin.com/ims/',
       imsClientId: 'AdobeStockClient2',
       imsLocale: 'en_US',
-      imsSignInUrl: 'authorize/v1',
-      imsSignOutUrl: 'logout/v1',
       scopes: [
         'account_cluster.read',
         'additional_info.address.mail_to',
@@ -88,43 +90,37 @@ const config = {
     hostUrl: 'http://adobestock.dev.stage.adobe.com'
   };
 
-const mockedHistory = {
-    createHref: () => '/story/stock-navbar',
-    location: {
-        pathname: '/story/stock-navbar',
-    },
-};
+// const analyticsDataCallback = () => ({
+//     workflow: 'stock-nav',
+//     'source.platform': 'SLP',
+// });
 
-const analyticsDataCallback = () => ({
-    workflow: 'stock-nav',
-    'source.platform': 'SLP',
-});
+// const analyticsOptions = {
+//     dispatch: (data = {}) => {},
+//     process: (data = {}) => {},
+//   };
 
-const analyticsOptions = {
-    dispatch: (data = {}) => {},
-    process: (data = {}) => {},
+function App({ intl, isGloballySafeCollectionEnabled }) {  
+  const {
+    [isNavbarV2EnabledFF.id]: isNavbarV2Enabled = { value: false },
+    [isNavbarV2WithoutFreePremiumEnabledFF.id]: isNavbarV2WithoutFreePremiumEnabled = { value: false },
+  } = useFeatureFlags();
+
+  console.log(useFeatureFlags());
+
+  const appConfig = {
+    ...config,
+    isGloballySafeCollectionEnabled,
   };
 
-function App({user}) {
-    return (
-        <StockNavbarMarketplace
-            config={config}
-            logoutUrl={'#/_logout'}
-            phoneNumber={'1800-test'}
-            user={user}
-            history={mockedHistory}
-        />
+  return (
+    <StockNavbarFranklinWrapper
+      config={appConfig}
+      // Can this come dynamically from Franklin? Or use set of ph nos by locale
+      phoneNumber={'1800-test'}
+      intl={intl}
+    />
     )
   }
 
-function mapStateToProps({
-  // config,
-  user,
-}) {
-  return {
-    // config,
-    user,
-  };
-}
-
-export default connect(mapStateToProps)(App);
+export default injectIntl(App);
