@@ -130,6 +130,6 @@ window.addEventListener('adobePrivacy:PrivacyReject', () => {
 }
 
 const container = document.createElement('div');
-document.getElementsByClassName('hello-world')[0].prepend(container);
+document.getElementsByClassName('navbar-placeholder')[0].append(container);
 
 ReactDOM.render(<WrappedApp />, container);

@@ -1,0 +1,9 @@
+.navbar-placeholder {
+  height: 56px;
+  width: 100%;
+  background: #fff;
+  align-items: center;
+  border-bottom: 2px solid #E1E1E1;
+  position: relative;
+  z-index: 3;
+}

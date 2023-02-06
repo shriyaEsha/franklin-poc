@@ -70807,7 +70807,7 @@ function $f7e1fd7eae98c535$var$WrappedApp() {
     })))));
 }
 const $f7e1fd7eae98c535$var$container = document.createElement("div");
-document.getElementsByClassName("hello-world")[0].prepend($f7e1fd7eae98c535$var$container);
+document.getElementsByClassName("navbar-placeholder")[0].append($f7e1fd7eae98c535$var$container);
 (0, (/*@__PURE__*/$parcel$interopDefault($cVxhG))).render(/*#__PURE__*/ (0, (/*@__PURE__*/$parcel$interopDefault($6Yugf))).createElement($f7e1fd7eae98c535$var$WrappedApp, null), $f7e1fd7eae98c535$var$container);
 
 })();
